@@ -3,15 +3,8 @@ source("R/Functions.R")
 
 
 # Open data ####
-StreamflowEnergy <-
-  read.table(file = "Example application/Input data/Streamflow Equivalent Energy.txt",
-             header = T, row.names = NULL, check.names = F, sep = "\t", dec = ".",
-             fileEncoding = "UTF-8")
-
-ClimaticInfo <-
-  read.table(file = "Example application/Input data/Climatic indicators.txt",
-             header = T, row.names = NULL, check.names = F, sep = "\t", dec = ".",
-             fileEncoding = "UTF-8")
+data("ClimaticInfo")
+data("StreamflowEnergy")
 
 
 # Run function ####
