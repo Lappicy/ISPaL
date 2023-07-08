@@ -5,10 +5,10 @@
 #'
 #' @format A four column data.frame with
 #' \describe{
-#' \item{Date is the Date for the observed values}
-#' \item{U1 gives the Zonal Winds values}
-#' \item{SST2 is the sea surface temperature in part of the Atlancic}
-#' \item{NINO3 is the sea surface temperature at the Nino 3.4 region in the Pacific}
+#' \item{Date}{It is the Date for the observed values}
+#' \item{U1}{The Zonal Winds values}
+#' \item{SST2}{The sea surface temperature in part of the Atlancic}
+#' \item{NINO3}{The sea surface temperature at the Nino 3.4 region in the Pacific}
 #' }
 #'
 "ClimaticInfo"
