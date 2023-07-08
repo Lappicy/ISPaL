@@ -1,7 +1,3 @@
-# Read the functions ####
-source("R/Functions.R")
-
-
 # Open data ####
 data("ClimaticInfo")
 data("StreamflowEnergy")
@@ -18,7 +14,7 @@ forecast.results <-
                           period.validation = c(2011, 2021))
 
 
-# Get the 4 created tables separated
+# Get the 4 created tables separated ####
 Forecast.table <- forecast.results[[1]]
 Error.table <- forecast.results[[2]]
 All.error.table <- forecast.results[[3]]
