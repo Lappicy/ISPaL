@@ -10,64 +10,64 @@ forecast.PAR.PARX.RIDGE <-
     period.calibration.parx <- period.calibration
     period.calibration <- c(period.calibration[1], period.test[2])
 
-    start.date.Y <- min(year(var.Y$Date))
-    end.date.Y <- max(year(var.Y$Date))
+    start.date.Y <- min(lubridate::year(var.Y$Date))
+    end.date.Y <- max(lubridate::year(var.Y$Date))
 
-    start.date.X <- min(year(var.X$Date))
-    end.date.X <- max(year(var.X$Date))
+    start.date.X <- min(lubridate::year(var.X$Date))
+    end.date.X <- max(lubridate::year(var.X$Date))
 
 
     # Transform streamflow table to time series format ####
     var.Y <- as.matrix(var.Y[,2:ncol(var.Y)])
-    var.Y.ts <- ts(var.Y, deltat = 1/12,
-                   start = c(start.date.Y, 1),
-                   end = c(end.date.Y, 12))
+    var.Y.ts <- stats::ts(var.Y, deltat = 1/12,
+                          start = c(start.date.Y, 1),
+                          end = c(end.date.Y, 12))
 
     # Prepare the data for calibration as well
-    var.Y.calib <- window(var.Y.ts, deltat = 1/12,
-                          start = c(period.calibration[1], 1),
-                          end = c(period.calibration[2], 12))
+    var.Y.calib <- stats::window(var.Y.ts, deltat = 1/12,
+                                 start = c(period.calibration[1], 1),
+                                 end = c(period.calibration[2], 12))
 
     if(!is.null(period.test)){
-      var.Y.calib.parx <- window(var.Y.ts, deltat = 1/12,
-                                 start = c(period.calibration.parx[1], 1),
-                                 end = c(period.calibration.parx[2], 12))
+      var.Y.calib.parx <- stats::window(var.Y.ts, deltat = 1/12,
+                                        start = c(period.calibration.parx[1], 1),
+                                        end = c(period.calibration.parx[2], 12))
 
-      var.Y.test.parx <- window(var.Y.ts, deltat = 1/12,
-                                start = c(period.test[1], 1),
-                                end = c(period.test[2], 12))
+      var.Y.test.parx <- stats::window(var.Y.ts, deltat = 1/12,
+                                       start = c(period.test[1], 1),
+                                       end = c(period.test[2], 12))
     }
 
-    var.Y.valid <- window(var.Y.ts, deltat = 1/12,
-                          start = c(period.validation[1], 1),
-                          end = c(period.validation[2], 12))
+    var.Y.valid <- stats::window(var.Y.ts, deltat = 1/12,
+                                 start = c(period.validation[1], 1),
+                                 end = c(period.validation[2], 12))
 
 
     # Transform climatic table to time series format ####
     # Transforme data into ts format
-    var.X.ts <- ts(var.X[,2:ncol(var.X)], deltat = 1/12,
-                   start = c(start.date.X, 1),
-                   end = c(end.date.Y, 12))
+    var.X.ts <- stats::ts(var.X[,2:ncol(var.X)], deltat = 1/12,
+                          start = c(start.date.X, 1),
+                          end = c(end.date.Y, 12))
 
     # Calibration
-    var.X.calib <- window(var.X.ts, deltat = 1/12,
-                          start = c(period.calibration[1], 1),
-                          end = c(period.calibration[2], 12))
+    var.X.calib <- stats::window(var.X.ts, deltat = 1/12,
+                                 start = c(period.calibration[1], 1),
+                                 end = c(period.calibration[2], 12))
 
     # Test
     if(!is.null(period.test)){
-      var.X.calib.parx <- window(var.X.ts, deltat = 1/12,
-                                 start = c(period.calibration.parx[1], 1),
-                                 end = c(period.calibration.parx[2], 12))
+      var.X.calib.parx <- stats::window(var.X.ts, deltat = 1/12,
+                                        start = c(period.calibration.parx[1], 1),
+                                        end = c(period.calibration.parx[2], 12))
 
-      var.X.test.parx <- window(var.X.ts, deltat = 1/12,
-                                start = c(period.test[1], 1),
-                                end = c(period.test[2], 12))
+      var.X.test.parx <- stats::window(var.X.ts, deltat = 1/12,
+                                       start = c(period.test[1], 1),
+                                       end = c(period.test[2], 12))
     }
 
-    var.X.valid <- window(var.X.ts, deltat = 1/12,
-                          start = c(period.validation[1], 1),
-                          end = c(period.validation[2], 12))
+    var.X.valid <-stats:: window(var.X.ts, deltat = 1/12,
+                                 start = c(period.validation[1], 1),
+                                 end = c(period.validation[2], 12))
 
 
     # For each column K of the streamflow data ####
@@ -95,17 +95,17 @@ forecast.PAR.PARX.RIDGE <-
       # For each forecast lag (or lead time) ####
       for (LAG in forecast.lag){
         # Create null ts with the correct validation times for each LAG ####
-        yv.pred.par <- ts(NA, deltat = 1/12,
-                          start = c(period.validation[1], 1),
-                          end = c(period.validation[2], 12))
+        yv.pred.par <- stats::ts(NA, deltat = 1/12,
+                                 start = c(period.validation[1], 1),
+                                 end = c(period.validation[2], 12))
 
-        yv.pred.parx <- ts(NA, deltat = 1/12,
-                           start = c(period.validation[1], 1),
-                           end = c(period.validation[2], 12))
+        yv.pred.parx <- stats::ts(NA, deltat = 1/12,
+                                  start = c(period.validation[1], 1),
+                                  end = c(period.validation[2], 12))
 
-        yv.pred.ridge <- ts(NA, deltat = 1/12,
-                            start = c(period.validation[1], 1),
-                            end = c(period.validation[2], 12))
+        yv.pred.ridge <- stats::ts(NA, deltat = 1/12,
+                                   start = c(period.validation[1], 1),
+                                   end = c(period.validation[2], 12))
 
         # For each MONTH defined ####
         for (MONTH in forecast.months){
