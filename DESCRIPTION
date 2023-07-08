@@ -1,0 +1,27 @@
+Package: ISPaL
+Type: Package
+Title: Periodic Forecasting with exogenous variables using PAR, PARX and RIDGE models
+Version: 0.1.0
+Author: Thiago Lappicy; Carlos H. R. Lima
+Maintainer: Thiago Lappicy <lappicy@gmail.com>
+Description: This package was created for streamflow monthly forecasts with periodic
+    models and climatic indicators, but the framework may be applied to various
+    possibilities.
+URL: https://github.com/Lappicy/ISPaL
+License: MIT License
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    jsonlite,
+    rjson,
+    forecast,
+    lubridate,
+    stats,
+    pls,
+    glmnet,
+    MASS,
+    foreign
+RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)
