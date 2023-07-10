@@ -13,26 +13,26 @@ To show how to run the main function within this package, named *forecast.PAR.PA
 To download the package through **R**, you must have downloaded the *devtools* package (https://cran.r-project.org/web/packages/devtools/index.html). If using windows as an OS (Operating System), it is needed to first download **Rtools**, from the website (https://cran.r-project.org/bin/windows/Rtools/).
 
 To install and open the *devtools* package using the command line in R, run the following codes:
-
+```r
   install.packages("devtools")
   library(devtools)
-
+```
 If the package (*devtools*) ir properly installed and opened, you must then install, and load, the *ISPaL* package through the github link with the code:
-
+```r
   devtools::install_github("Lappicy/ISPaL")
   library(ISPaL)
-
+```
 ### Acessing the data
 
 The streamflow and climatic data used in this practical example can be acesses through the commands:
-
+```r
   data(StreamflowEnergy)
   data(ClimaticInfo)
-
+```
 ### Running the forecasts
 
 To run the forecast, only one function is needed, that being *forecast.PAR.PARX.RIDGE()*. The arguments passed are the data.frame with the variables of interest (*Var.Y=*), a data.frame with the exogenous variables (*Var.X=*), the forecasting horizon (*forecast.lag*), months used (*forecast.months*) and the start and end dates for the calibration, testing and validation periods (*period.calib=*, *period.test=* and *period.valid=*). The following code runs the main function with the arguments being explicitely defined and saves the output into an object called **forecast.results**.
-
+```r
   forecast.results <-
     forecast.PAR.PARX. RIDGE(var.Y = StreamflowEnergy,
                             var.X = ClimaticInfo,
@@ -41,16 +41,16 @@ To run the forecast, only one function is needed, that being *forecast.PAR.PARX.
                             period.calibration = c(1949, 1990),
                             period.test = c(1991, 2010),
                             period.validation = c(2011, 2021))
-
+```
 ### Acessing the forecasts
 
 The output of the function is a list with four tables. The first table (*Forecast.table*) has all the observed and forecasted values for each model. The second and third table (*Error.table* and *All.error.table*) are simillar between each other, having the coefficients used for each exogenous variable as well as the **NSE** and **KGE** metrics (with its individuals components). The difference between both tables is that the level of detail in each one. Lastly, the final table (*Lambda.table*) has the lambda values used in the ridge regression for each time series, month and lag used.
-
+```r
   Forecast.table <- forecast.results[[1]]
   Error.table <- forecast.results[[2]]
   All.error.table <- forecast.results[[3]]
   Lambda.table <- forecast.results[[4]]
-
+```
  ### Tables 
 
 
