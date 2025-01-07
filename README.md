@@ -4,7 +4,7 @@ This package was created for forecasting monthly values using three models (PAR,
 
 ## Practical Example
 
-To show how to run the main function within this package, named *forecast.PAR.PARX.RIDGE()*, a practical example was made available. This example uses four monthly streamflow time series from the Brazilian hydropower sector (four subsystems), shown in the image below, and three climatic indicators as exogenous variables (named U1, SST2 and NINO3). One may choose to download such data from the foldedr **Example application**, but this exact same data is available through the **R** package.
+To show how to run the main function within this package, named *forecast.PAR.PARX.RIDGE()*, a practical example was made available. This example uses four monthly streamflow time series from the Brazilian hydropower sector (four subsystems), shown in the image below, and three climatic indicators as exogenous variables (named U1, SST2 and NINO3). One may choose to download such data from the folder **Example application**, but this exact same data is available through the **R** package.
 
 ![alt text](https://github.com/Lappicy/ISPaL/blob/main/Example%20application/Images%20created/Map%20subsistem%20centroid.png)
 
@@ -44,7 +44,7 @@ To run the forecast, only one function is needed, that being *forecast.PAR.PARX.
 ```
 ### Acessing the forecasts
 
-The output of the function is a list with four tables. The first table (*Forecast.table*) has all the observed and forecasted values for each model. The second and third table (*Error.table* and *All.error.table*) are simillar between each other, having the coefficients used for each exogenous variable as well as the **NSE** and **KGE** metrics (with its individuals components). The difference between both tables is that the level of detail in each one. Lastly, the final table (*Lambda.table*) has the lambda values used in the ridge regression for each time series, month and lag used.
+The output of the function is a list with four tables. The first table (*Forecast.table*) has all the observed and forecasted values for each model. The second and third table (*Error.table* and *All.error.table*) are simillar between each other, having the coefficients used for each exogenous variable as well as the **NSE** and **KGE** metrics (with its individuals components). The difference between both tables is the level of detail in each one (the more complete table has the three models used as well as a PARX1, PARX2 and PARX3 model - each forcing exactly one exogenous variable). Lastly, the final table (*Lambda.table*) has the lambda values used in the ridge regression for each time series, month and lag used.
 ```r
   Forecast.table <- forecast.results[[1]]
   Error.table <- forecast.results[[2]]
