@@ -1,6 +1,8 @@
 # ISPaL
 
-This package was created for forecasting monthly values using three models (PAR, PARX and RIDGE) with up to three exogenous variables (with the PARX and RIDGE). Although it was designed to be used with streamflow values, there are no reasons to why it must be limited to such.
+This package was created for forecasting monthly values using three models (PAR, PARX and RIDGE) with up to three exogenous variables (with the PARX and RIDGE). Although it was designed to be used with streamflow values, there are no reasons to why it must be limited to such. This code was successfully used in a few published articles:
+1. [A framework to evaluate and compare synthetic streamflow scenario generation models](https://doi.org/10.1590/2318-0331.282320230115);
+2. [Enhancing monthly streamflow forecasting for Brazilian hydropower plants through climate index integration with stochastic methods](https://doi.org/10.1590/2318-0331.282320230118).
 
 ## Practical Example
 
@@ -31,10 +33,11 @@ The streamflow and climatic data used in this practical example can be acesses t
 ```
 ### Running the forecasts
 
-To run the forecast, only one function is needed, that being *forecast.PAR.PARX.RIDGE()*. The arguments passed are the data.frame with the variables of interest (*Var.Y=*), a data.frame with the exogenous variables (*Var.X=*), the forecasting horizon (*forecast.lag*), months used (*forecast.months*) and the start and end dates for the calibration, testing and validation periods (*period.calib=*, *period.test=* and *period.valid=*). The following code runs the main function with the arguments being explicitely defined and saves the output into an object called **forecast.results**.
+To run the forecast, only one function is needed, that being *forecast.PAR.PARX.RIDGE()*. The arguments passed are the data.frame with the variables of interest (*Var.Y=*), a data.frame with the exogenous variables (*Var.X=*), the forecasting horizon (*forecast.lag*), months used (*forecast.months*) and the start and end dates for the calibration, testing and validation periods (*period.calib=*, *period.test=* and *period.valid=*). The following code runs the main function with the arguments being explicitely defined and saves the output into an object called **forecast.results**. The *models=* argument may be changed to run only some of the three possible models (PAR, PARX and RIDGE), thus improving efficiency.
 ```r
   forecast.results <-
-    forecast.PAR.PARX.RIDGE(var.Y = StreamflowEnergy,
+    forecast.PAR.PARX.RIDGE(models = c("PAR", "PARX", "RIDGE"),
+                            var.Y = StreamflowEnergy,
                             var.X = ClimaticInfo,
                             forecast.lag = 1:6,
                             forecast.months = 1:12,
