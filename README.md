@@ -1,6 +1,6 @@
 # ISPaL
 
-This package was created for forecasting monthly values using three models (PAR, PARX and RIDGE) with up to three exogenous variables (with the PARX and RIDGE). Although it was designed to be used with streamflow values, there are no reasons to why it must be limited to such. This code was successfully used in a few published articles:
+This package was created for forecasting monthly values using three models (PAR, PARX and RIDGE) with up to three exogenous variables (with the PARX and RIDGE). Although it was designed to be used with streamflow values, there are no reasons to why it must be limited to such. This code was successfully used in two already published articles:
 1. [A framework to evaluate and compare synthetic streamflow scenario generation models](https://doi.org/10.1590/2318-0331.282320230115);
 2. [Enhancing monthly streamflow forecasting for Brazilian hydropower plants through climate index integration with stochastic methods](https://doi.org/10.1590/2318-0331.282320230118).
 
