@@ -5,7 +5,8 @@ data("StreamflowEnergy")
 
 # Run function ####
 forecast.results <-
-  forecast.PAR.PARX.RIDGE(var.Y = StreamflowEnergy,
+  forecast.PAR.PARX.RIDGE(models = c("PAR", "PARX", "RIDGE"),
+                          var.Y = StreamflowEnergy,
                           var.X = ClimaticInfo,
                           forecast.lag = 1:6,
                           forecast.months = 1:12,
