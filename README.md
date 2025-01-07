@@ -34,7 +34,7 @@ The streamflow and climatic data used in this practical example can be acesses t
 To run the forecast, only one function is needed, that being *forecast.PAR.PARX.RIDGE()*. The arguments passed are the data.frame with the variables of interest (*Var.Y=*), a data.frame with the exogenous variables (*Var.X=*), the forecasting horizon (*forecast.lag*), months used (*forecast.months*) and the start and end dates for the calibration, testing and validation periods (*period.calib=*, *period.test=* and *period.valid=*). The following code runs the main function with the arguments being explicitely defined and saves the output into an object called **forecast.results**.
 ```r
   forecast.results <-
-    forecast.PAR.PARX. RIDGE(var.Y = StreamflowEnergy,
+    forecast.PAR.PARX.RIDGE(var.Y = StreamflowEnergy,
                             var.X = ClimaticInfo,
                             forecast.lag = 1:6,
                             forecast.months = 1:12,
