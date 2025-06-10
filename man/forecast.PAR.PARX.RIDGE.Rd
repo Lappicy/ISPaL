@@ -12,7 +12,7 @@ forecast.PAR.PARX.RIDGE(models = c("PAR", "PARX", "RIDGE"),
 }
 \arguments{
 
-  \item{models}{Names of the models chosen, to run inside the function. Can be any combination of: "PAR", "PARX" and/or "RIDGE"}
+  \item{models}{Character vector specifying which models to run. Accepted values are "PAR", "PARX", and/or "RIDGE".}
 
   \item{var.Y}{A data.frame containing the first column as date and the others as streamflow time series}
 
