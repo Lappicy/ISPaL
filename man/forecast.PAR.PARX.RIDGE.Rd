@@ -2,7 +2,8 @@
 \alias{forecast.PAR.PARX.RIDGE}
 \title{Monthly forecast using PAR, PARX and RIDGE models with exonegous variables}
 \usage{
-forecast.PAR.PARX.RIDGE(var.Y, var.X,
+forecast.PAR.PARX.RIDGE(models = c("PAR", "PARX", "RIDGE"),
+                        var.Y, var.X,
                         forecast.lag = 1:6,
                         forecast.months = 1:12,
                         period.calibration,
@@ -10,6 +11,9 @@ forecast.PAR.PARX.RIDGE(var.Y, var.X,
                         period.test)
 }
 \arguments{
+
+  \item{models}{Names of the models chosen, to run inside the function. Can be any combination of: "PAR", "PARX" and/or "RIDGE"}
+
   \item{var.Y}{A data.frame containing the first column as date and the others as streamflow time series}
 
   \item{var.X}{A data.frame containing the first column as date and the others as the desired exonegous variables}
