@@ -1,105 +1,278 @@
-# ISPaL
+# ISPaL Shiny
 
-This package was created for forecasting monthly values using three models (PAR, PARX and RIDGE) with up to three exogenous variables (with the PARX and RIDGE). Although it was designed to be used with streamflow values, there are no reasons to why it must be limited to such. This code was successfully used in two already published articles:
-1. [A framework to evaluate and compare synthetic streamflow scenario generation models](https://doi.org/10.1590/2318-0331.282320230115);
-2. [Enhancing monthly streamflow forecasting for Brazilian hydropower plants through climate index integration with stochastic methods](https://doi.org/10.1590/2318-0331.282320230118).
+Interface Shiny para executar e explorar previsões periódicas com os modelos
+PAR, PARX e RIDGE associados ao pacote ISPaL.
 
-## Practical Example
+A aplicação é autocontida dentro desta pasta. Ela não depende de arquivos em
+diretórios externos para executar, testar ou carregar os dados de exemplo.
 
-To show how to run the main function within this package, named *forecast.PAR.PARX.RIDGE()*, a practical example was made available. This example uses four monthly streamflow time series from the Brazilian hydropower sector (four subsystems), shown in the image below, and three climatic indicators as exogenous variables (named U1, SST2 and NINO3). One may choose to download such data from the folder **Example application**, but this exact same data is available through the **R** package.
+## Funcionalidades
 
-![alt text](https://github.com/Lappicy/ISPaL/blob/main/Example%20application/Images%20created/Map%20subsistem%20centroid.png)
+- Importação de CSV, TXT, TSV, XLS e XLSX.
+- Uso de uma tabela conjunta ou de tabelas Y e X separadas.
+- Seleção de uma ou várias séries dependentes Y.
+- Seleção de até 10 covariáveis X.
+- Identificação automática das colunas de data, Y e X, com alteração opcional
+  pelo Diagnóstico.
+- Conversão e validação de datas mensais.
+- Escolha de modelos, leads, meses e períodos.
+- Execução com barra de progresso e captura de erros.
+- Visualização interativa das quatro tabelas:
+  - `Forecast.table`;
+  - `Error.table`;
+  - `All.error.table`;
+  - `Lambda.table`.
+- Exportação das quatro tabelas em um único arquivo Excel.
+- Gráficos de distribuição/ridgelines e boxplots.
+- Gráficos de modelo vencedor por mês ou lead.
+- Matriz de correlação das covariáveis.
+- Correlação cruzada (CCF) entre uma ou várias variáveis Y e as covariáveis X.
+- Geração dos gráficos a partir de uma tabela de resultados já existente.
 
-### Download the package in R/Rstudio
+## Instalação
 
-To download the package through **R**, you must have downloaded the *devtools* package (https://cran.r-project.org/web/packages/devtools/index.html). If using windows as an OS (Operating System), it is needed to first download **Rtools**, from the website (https://cran.r-project.org/bin/windows/Rtools/).
+No R:
 
-To install and open the *devtools* package using the command line in R, run the following codes:
 ```r
-  install.packages("devtools")
-  library(devtools)
+setwd("/caminho/para/ISPaL_Shiny")
+source("install_dependencies.R")
 ```
-If the package (*devtools*) ir properly installed and opened, you must then install, and load, the *ISPaL* package through the github link with the code:
+
+Dependências principais:
+
+`shiny`, `bslib`, `shinyWidgets`, `DT`, `readxl`, `readr`, `openxlsx`,
+`ggplot2`, `ggridges`, `patchwork`, `shinycssloaders`, `dplyr`,
+`lubridate`, `MASS`, `scales` e `testthat`.
+
+## Como publicar no GitHub
+
+Use o conteúdo da pasta `ISPaL_Shiny` como a raiz do repositório. Ou seja,
+suba estes arquivos e pastas diretamente:
+
+```text
+app.R
+R/
+www/
+inst/
+tests/
+README.md
+run_app.R
+install_dependencies.R
+LICENSE
+.gitignore
+```
+
+Não é necessário subir a pasta externa `ISPaL (fonte)`. Os dados de exemplo
+usados pelos testes e pela documentação já estão em `inst/extdata`.
+
+## Como executar
+
+Dentro da pasta `ISPaL_Shiny`:
+
 ```r
-  devtools::install_github("Lappicy/ISPaL")
-  library(ISPaL)
+shiny::runApp(".")
 ```
-### Acessing the data
 
-The streamflow and climatic data used in this practical example can be acesses through the commands:
+ou:
+
 ```r
-  data(StreamflowEnergy)
-  data(ClimaticInfo)
+source("run_app.R")
 ```
-### Running the forecasts
 
-To run the forecast, only one function is needed, that being *forecast.PAR.PARX.RIDGE()*. The arguments passed are the data.frame with the variables of interest (*Var.Y=*), a data.frame with the exogenous variables (*Var.X=*), the forecasting horizon (*forecast.lag*), months used (*forecast.months*) and the start and end dates for the calibration, testing and validation periods (*period.calib=*, *period.test=* and *period.valid=*). The following code runs the main function with the arguments being explicitely defined and saves the output into an object called **forecast.results**. The *models=* argument may be changed to run only some of the three possible models (PAR, PARX and RIDGE), thus improving efficiency.
+A partir da pasta que contém `ISPaL_Shiny`:
+
 ```r
-  forecast.results <-
-    forecast.PAR.PARX.RIDGE(models = c("PAR", "PARX", "RIDGE"),
-                            var.Y = StreamflowEnergy,
-                            var.X = ClimaticInfo,
-                            forecast.lag = 1:6,
-                            forecast.months = 1:12,
-                            period.calibration = c(1949, 1990),
-                            period.test = c(1991, 2010),
-                            period.validation = c(2011, 2021))
+shiny::runApp("ISPaL_Shiny")
 ```
-### Acessing the forecasts
 
-The output of the function is a list with four tables. The first table (*Forecast.table*) has all the observed and forecasted values for each model. The second and third table (*Error.table* and *All.error.table*) are simillar between each other, having the coefficients used for each exogenous variable as well as the **NSE** and **KGE** metrics (with its individuals components). The difference between both tables is the level of detail in each one (the more complete table has the three models used as well as a PARX1, PARX2 and PARX3 model - each forcing exactly one exogenous variable). Lastly, the final table (*Lambda.table*) has the lambda values used in the ridge regression for each time series, month and lag used.
+Após clonar ou baixar o repositório do GitHub, entre na pasta baixada, instale
+as dependências uma vez e execute:
+
 ```r
-  Forecast.table <- forecast.results[[1]]
-  Error.table <- forecast.results[[2]]
-  All.error.table <- forecast.results[[3]]
-  Lambda.table <- forecast.results[[4]]
+source("install_dependencies.R")
+source("run_app.R")
 ```
- ### Tables 
 
-The first and last lines of each of the four tables may be seen below.
+## Formato dos dados
 
-*Forecast.table*:
+### Uma tabela
 
-| K  | Lag  | Month | Obs | SimPAR | SimPARX | SimRIDGE | SimPARX0 | SimPARX1 | SimPARX2 | SimPARX3 |
-| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |
-| 1 | 1 | 1 | 2720.3141 | 2309.7943 | 2298.3708 | 2287.6540 | 2311.3535 | 2480.7898 | 2298.3708 | 2252.7486 |
-| 1 | 1 | 1 | 1350.0932 | 1785.8570 | 1784.4341 | 1704.5644 | 1780.2105 | 1537.3510 | 1784.4341 | 1786.6621 |
-| 1 | 1 | 1 | 2056.2610 | 1937.3367 | 1937.2465 | 2016.5013 | 1933.7735 | 2182.3509 | 1937.2465 | 1963.6256 |
-| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
-| 4 | 6 | 12 | 2585.1120 | 3283.3108 | 3231.6469 | 3337.2106 | 3270.5714 | 3202.9450 | 3193.2188 | 3359.0699 |
-| 4 | 6 | 12 | 2126.4710 | 3026.4663 | 2875.8418 | 3074.8666 | 3004.2802 | 2950.1355 | 2950.1957 | 2989.7818 |
-| 4 | 6 | 12 | 2997.5824 | 2974.3431 | 3083.3928 | 3188.0931 | 2950.2400 | 3036.4004 | 2902.9608 | 2992.6121 |
+```text
+Date        Y_1     Y_2     X_1     X_2
+1949-01-01  ...     ...     ...     ...
+1949-02-01  ...     ...     ...     ...
+```
 
-Both tables, *Error.table* / *All.error.table*, have the same columns. The difference is that the *All.error.table* has three more models (PARX1, PARX2 and PARX3):
+O usuário indica:
 
-| K  | Lag  | Month | Lambda | CoefB0 | CoefBVazao | CoefBX1 | CoefBX2 | CoefBX3 | NSE.orig | NSE.comp | Alpha.NSE | Beta.NSE | r.NSE | KGE.orig | Alpha.KGE | Beta.KGE | r.KGE |
-| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |  :----------: | :----------: | :----------: |  :----------: | :----------: |
-| 1 | 1 | 1 | PAR | 525.242237 | 1.28605022 | 0.00000000 | 0.000000 | 0.0000000 | 0.408715395 | 0.429344876 | 0.76733382 | 0.430889002 | 0.78441180 | 0.630199374 | 0.76733382 | 1.1901070 | 0.78441180 |
-| 1 | 1 | 1 | PARX | 497.537335 | 1.30763782 | 0.00000000 | 29.343743 | 0.0000000 | 0.406752039 | 0.426690857 | 0.77169391 | 0.423614639 | 0.77858053 | 0.631108467 | 0.77169391 | 1.1868976 | 0.77858053 |
-| 1 | 1 | 1 | RIDGE | 663.309483 | 1.19735852 | 47.37760182 | 25.644468 | 46.2968682 | 0.407968389 | 0.430721627 | 0.74652589 | 0.452525296 | 0.79890175 | 0.619801487 | 0.74652589 | 1.1996529 | 0.79890175 |
-| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
-| 4 | 6 | 12 | PAR | 1978.175760 | 0.622835085 | 0.000000 | 0.000000 | 0.0000000 | -1.61319884 | -1.49194078 | 0.48541761 | 1.101172376 | -0.04504362 | -0.180908108 | 0.48541761 | 1.1939917 | -0.04504362 |
-| 4 | 6 | 12 | PARX | 2183.900437 | 0.595745613 | 74.756779 | -80.498486 | 160.9157879 | -1.98999787 | -1.83914904 | 0.61230022 | 1.228205319 | 0.03613491 | -0.061208444 | 0.61230022 | 1.2163708 | 0.03613491 |
-| 4 | 6 | 12 | RIDGE | 2643.172325 | 0.350114288 | 35.250906 | -12.987287 | 135.9972728 | -1.95075196 | -1.79037626 | 0.38036294 | 1.266395290 | -0.05513584 | -0.243798517 | 0.38036294 | 1.2230987 | -0.05513584 |
+- a coluna de data;
+- uma ou mais colunas Y;
+- zero a dez colunas X.
 
-*Lambda.table*:
+Uma coluna não pode ser simultaneamente Y e X.
 
-| K  | Lag  | Month | Lambda |
-| :----------: | :----------: | :----------: | :----------: |
-| 1 | 1 | 1 | 4.40 |
-| 1 | 1 | 1 | 2.80 |
-| 1 | 1 | 1 | 1.65 |
-| ... | ... | ... | ... |
-| 4 | 6 | 10 | 12.25 |
-| 4 | 6 | 11 | 36.40 |
-| 4 | 6 | 12 | 34.20 |
+### Duas tabelas
 
- ### Possible analysis
+Tabela Y:
 
- Different analysis may be done with the results. Below we show two possibilities - one being the density plots showing the difference between the metrics for each model proposed (PAR without any climatic indicators, PARX and RIDGE using climatic indicicators).
+```text
+Date        Y_1     Y_2
+1949-01-01  ...     ...
+```
 
-![alt text](https://github.com/Lappicy/ISPaL/blob/main/Example%20application/Images%20created/Climatic%20value%20density%20plot%20and%20boxplot.png)
+Tabela X:
 
- The other analysis may be spatial, shown in the map below.
+```text
+Date        X_1     X_2     X_3
+1949-01-01  ...     ...     ...
+```
 
- ![alt text](https://github.com/Lappicy/ISPaL/blob/main/Example%20application/Images%20created/Climatic%20gain%20SUBSYSTEM%20KGE.png)
+As tabelas podem começar em anos diferentes, mas precisam cobrir os períodos
+necessários à execução selecionada.
+
+### Dados de exemplo incluídos
+
+Os arquivos de exemplo estão dentro da própria aplicação:
+
+- `inst/extdata/data/StreamflowEnergy.rda`;
+- `inst/extdata/data/ClimaticInfo.rda`;
+- `inst/extdata/example_input/Streamflow Equivalent Energy.txt`;
+- `inst/extdata/example_input/Climatic indicators.txt`;
+- `inst/extdata/example_output/Forecast.txt`;
+- `inst/extdata/example_output/Errors.txt`;
+- `inst/extdata/example_output/All Errors.txt`;
+- `inst/extdata/example_output/Lambda.txt`.
+
+## Datas
+
+Formatos aceitos:
+
+- `YYYY-MM-DD`;
+- `DD/MM/YYYY`;
+- `MM/DD/YYYY`;
+- `YYYY-MM`;
+- `DD-MM-YYYY`;
+- `YYYY/MM/DD`;
+- números de data do Excel.
+
+A aplicação verifica datas inválidas, duplicadas, meses ausentes e frequência
+mensal. Problemas não são corrigidos silenciosamente.
+
+## Parâmetros iniciais
+
+```r
+models = c("PAR", "PARX", "RIDGE")
+forecast.lag = 1:6
+forecast.months = 1:12
+period.calibration = c("1949-01-01", "1990-12-31")
+period.validation = c("1991-01-01", "2010-12-31")
+period.test = c("2011-01-01", "2021-12-31")
+```
+
+O período de validação é usado para selecionar a melhor combinação de
+covariáveis do PARX. O teste é a avaliação final. PAR e RIDGE são calibrados
+usando a calibração mais a validação.
+
+## Modelos
+
+- **PAR:** regressão periódica usando o valor defasado da própria série.
+- **PARX:** acrescenta covariáveis e escolhe a combinação com maior KGE no
+  período de validação.
+- **RIDGE:** regressão periódica com regularização L2; lambda é escolhido pelo
+  menor GCV.
+
+PAR pode ser executado sem covariáveis. PARX e RIDGE precisam de ao menos uma
+variável X.
+
+## Até 10 covariáveis
+
+O backend da interface foi generalizado para até 10 covariáveis sem modificar
+os arquivos originais do pacote. Para manter a lógica PARX original, todos os
+subconjuntos possíveis são comparados:
+
+- 3 covariáveis: 8 combinações;
+- 6 covariáveis: 64 combinações;
+- 10 covariáveis: 1.024 combinações.
+
+Por isso, várias séries Y combinadas com muitos leads, meses e dez covariáveis
+podem exigir tempo considerável.
+
+`All.error.table` inclui:
+
+- os modelos principais selecionados;
+- `PARX0`, sem covariáveis;
+- um PARX forçado para cada covariável, identificado por
+  `PARX_<nome_da_variável>`.
+
+As colunas `X1_Name` a `X10_Name` documentam o mapeamento dos coeficientes
+`CoefBX1` a `CoefBX10`.
+
+## Resultados
+
+As tabelas possuem paginação e ordenação. Um único botão exporta `Forecast`,
+`Errors`, `All Errors` e `Lambda` para planilhas separadas no mesmo arquivo
+Excel.
+
+## Gráficos
+
+### Distribuições e boxplots
+
+O gráfico principal segue a figura utilizada no README e no artigo:
+
+- ridgelines por modelo;
+- boxplots horizontais;
+- cores consistentes;
+- linha vermelha no valor ideal;
+- painéis para as métricas selecionadas.
+
+Valores ideais:
+
+| Métrica | Ideal |
+|---|---:|
+| NSE, KGE | 1 |
+| β₍NSE₎ | 0 |
+| α₍KGE₎ | 1 |
+| β₍KGE₎ | 1 |
+| r | 1 |
+
+### Modelo vencedor
+
+Conta, por mês ou lead, qual modelo está mais próximo do valor ideal para cada
+métrica.
+
+### Resultados prontos
+
+É possível carregar `Error.table` ou `All.error.table` em TXT, CSV ou XLSX.
+A interface reconhece `Model`/`Modelo`, `Lag`/`Lead`, `Month`/`Mes` e permite
+mapear manualmente essas colunas.
+
+## Testes
+
+Na pasta do aplicativo:
+
+```r
+source("tests/testthat.R")
+```
+
+Os testes cobrem leitura de arquivos, datas, validações, múltiplas Y, execução
+dos modelos, dez covariáveis, quatro tabelas, exportações e gráficos.
+
+## Citação
+
+Lappicy, T., & Lima, C. H. (2023). Enhancing monthly streamflow forecasting
+for Brazilian hydropower plants through climate index integration with
+stochastic methods. *RBRH, 28*, e48.
+https://doi.org/10.1590/2318-0331.282320230118
+
+Treistman, F., Penna, D. D. J., Khenayfis, L. D. S., Cavalcante, N. B. R.,
+Souza Filho, F. D. A. D., Rocha, R. V., Estácio, A. B., Rolim, L. Z. R.,
+Pontes Filho, J. D. A., Porto, V. C., Guimarães, S. O., Pessanha, J. F. M.,
+Almeida, V. A., Chan, P. D. S. C., Lappicy, T., Lima, C. H. R.,
+Detzel, D. H. M., & Bessa, M. R. (2023). A framework to evaluate and compare
+synthetic streamflow scenario generation models. *RBRH, 28*, e43.
+https://doi.org/10.1590/2318-0331.282320230115
+
+## Licença
+
+O pacote ISPaL original usa a licença MIT. Consulte
+https://github.com/Lappicy/ISPaL.
