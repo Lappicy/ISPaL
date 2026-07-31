@@ -41,10 +41,26 @@ ISPaL/
 └── ISPaL_Shiny/          # esta aplicação completa
 ```
 
-Ela não é um segundo pacote R e não deve substituir a raiz de
-[`Lappicy/ISPaL`](https://github.com/Lappicy/ISPaL).
+Ela é um pacote R instalável dentro do repositório principal e não deve
+substituir a raiz de [`Lappicy/ISPaL`](https://github.com/Lappicy/ISPaL).
 
-Em outro computador, baixe ou clone o repositório completo. No terminal:
+Depois que a pasta `ISPaL_Shiny` estiver no GitHub, instale-a com:
+
+```r
+install.packages("remotes") # necessário apenas na primeira vez
+remotes::install_github("Lappicy/ISPaL", subdir = "ISPaL_Shiny")
+ISPaLShiny::runISPaL()
+```
+
+O argumento `subdir = "ISPaL_Shiny"` é obrigatório, pois o pacote do painel
+está nessa subpasta. Nas utilizações seguintes, basta executar:
+
+```r
+ISPaLShiny::runISPaL()
+```
+
+Como alternativa, em outro computador, baixe ou clone o repositório completo.
+No terminal:
 
 ```bash
 git clone https://github.com/Lappicy/ISPaL.git
@@ -88,16 +104,19 @@ ISPaL/
     ├── www/
     ├── inst/
     ├── tests/
+    ├── DESCRIPTION
+    ├── NAMESPACE
     ├── README.md
     ├── run_app.R
     ├── install_dependencies.R
     ├── LICENSE
+    ├── LICENSE.md
+    ├── man/
     └── .gitignore
 ```
 
-Não envie `ISPaL_Shiny` como repositório independente, nem mova seus arquivos
-para a raiz do pacote ISPaL. Os dados de exemplo usados pelos testes e pela
-documentação já estão em `ISPaL_Shiny/inst/extdata`.
+Não mova seus arquivos para a raiz do pacote ISPaL. Os dados de exemplo usados
+pelos testes e pela documentação já estão em `ISPaL_Shiny/inst/extdata`.
 
 ## Como executar uma cópia local
 
