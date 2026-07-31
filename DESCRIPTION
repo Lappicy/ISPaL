@@ -1,0 +1,45 @@
+Package: ISPaL
+Type: Package
+Title: Periodic Forecasting with Exogenous Variables
+Version: 0.1.0
+Authors@R:
+    c(person(given = "Thiago", family = "Lappicy", role = c("aut", "cre"),
+             email = "lappicy@gmail.com"),
+      person(given = "Carlos H. R.", family = "Lima", role = "aut"))
+Description: Provides a framework for monthly periodic forecasting with PAR,
+    PARX and RIDGE models and exogenous variables. The package includes the
+    original forecasting functions, example streamflow and climate datasets,
+    and a self-contained Shiny dashboard for importing data, configuring and
+    running models, inspecting results, exporting tables and creating metric
+    plots.
+URL: https://github.com/Lappicy/ISPaL
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends:
+    R (>= 4.1.0)
+Imports:
+    bslib,
+    dplyr,
+    DT,
+    forecast,
+    foreign,
+    glmnet,
+    ggridges,
+    ggplot2,
+    jsonlite,
+    lubridate,
+    MASS,
+    openxlsx,
+    patchwork,
+    pls,
+    readr,
+    readxl,
+    rjson,
+    shiny,
+    shinycssloaders,
+    shinyWidgets
+Suggests:
+    testthat
+Config/testthat/edition: 3
+LazyData: true
+RoxygenNote: 7.2.3
