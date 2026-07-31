@@ -29,20 +29,46 @@ diretórios externos para executar, testar ou carregar os dados de exemplo.
 - Correlação cruzada (CCF) entre uma ou várias variáveis Y e as covariáveis X.
 - Geração dos gráficos a partir de uma tabela de resultados já existente.
 
-## Instalação
+## Instalação pelo GitHub
+
+Depois de criar um repositório no GitHub com o conteúdo desta pasta como raiz,
+instale e inicie o painel no R com:
+
+```r
+install.packages("remotes") # necessário apenas na primeira vez
+remotes::install_github("SEU_USUARIO/SEU_REPOSITORIO")
+ISPaLShiny::runISPaL()
+```
+
+Substitua `SEU_USUARIO/SEU_REPOSITORIO` pelo endereço do repositório, por
+exemplo, `lappicy/ISPaL_Shiny`. Nas utilizações seguintes, basta executar:
+
+```r
+ISPaLShiny::runISPaL()
+```
+
+Para atualizar a versão instalada a partir do GitHub:
+
+```r
+remotes::install_github("SEU_USUARIO/SEU_REPOSITORIO", upgrade = "never")
+```
+
+## Instalação a partir de uma cópia baixada
 
 No R:
 
 ```r
 setwd("/caminho/para/ISPaL_Shiny")
 source("install_dependencies.R")
+source("run_app.R")
+runISPaL()
 ```
 
 Dependências principais:
 
 `shiny`, `bslib`, `shinyWidgets`, `DT`, `readxl`, `readr`, `openxlsx`,
 `ggplot2`, `ggridges`, `patchwork`, `shinycssloaders`, `dplyr`,
-`lubridate`, `MASS`, `scales` e `testthat`.
+`lubridate`, `MASS` e `testthat`.
 
 ## Como publicar no GitHub
 
@@ -58,14 +84,17 @@ tests/
 README.md
 run_app.R
 install_dependencies.R
+DESCRIPTION
+NAMESPACE
 LICENSE
+LICENSE.md
 .gitignore
 ```
 
 Não é necessário subir a pasta externa `ISPaL (fonte)`. Os dados de exemplo
 usados pelos testes e pela documentação já estão em `inst/extdata`.
 
-## Como executar
+## Como executar a cópia local
 
 Dentro da pasta `ISPaL_Shiny`:
 
@@ -77,6 +106,7 @@ ou:
 
 ```r
 source("run_app.R")
+runISPaL()
 ```
 
 A partir da pasta que contém `ISPaL_Shiny`:
@@ -85,12 +115,13 @@ A partir da pasta que contém `ISPaL_Shiny`:
 shiny::runApp("ISPaL_Shiny")
 ```
 
-Após clonar ou baixar o repositório do GitHub, entre na pasta baixada, instale
-as dependências uma vez e execute:
+Após clonar ou baixar o repositório do GitHub sem instalá-lo como pacote,
+entre na pasta baixada, instale as dependências uma vez e execute:
 
 ```r
 source("install_dependencies.R")
 source("run_app.R")
+runISPaL()
 ```
 
 ## Formato dos dados

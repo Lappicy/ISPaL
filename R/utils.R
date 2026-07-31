@@ -7,6 +7,9 @@ ispal_app_dir <- function() {
 }
 
 ispal_extdata_dir <- function(...) {
+  installed_path <- system.file("extdata", ..., package = "ISPaLShiny")
+  if (nzchar(installed_path)) return(installed_path)
+
   normalizePath(file.path(ispal_app_dir(), "inst", "extdata", ...), mustWork = FALSE)
 }
 
